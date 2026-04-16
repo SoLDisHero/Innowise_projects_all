@@ -2,9 +2,10 @@ from dotenv import load_dotenv
 from decimal import Decimal 
 import logging
 from src.handler.loader import Loader
-from src.handler.json_export import Writer
+from src.handler.export import Writer
 from src.db.db_conn import managing_connection, SQL_Manager
 from src.handler import queries
+from src.cli.cli import cli_parser
 
 # Create logging for event tracking instead of using print() function
 
@@ -18,9 +19,15 @@ logger = logging.getLogger(__name__)
 
 # Read JSON files first
 
-rooms = Loader("data/rooms.json").load_json()
-students = Loader("data/students.json").load_json()
+# rooms = Loader("data/rooms.json").load_json()
+# students = Loader("data/students.json").load_json()
 schema = Loader("schema.sql").load_sql()
+
+# Read files using CLI for rooms, students and format
+args = cli_parser()
+rooms = Loader(args.rooms).load_json()
+students = Loader(args.students).load_json()
+format = args.format
 
 # Create .env file
 
@@ -56,7 +63,6 @@ cursor.execute("CREATE DATABASE IF NOT EXISTS university")
 # ---NECESSARY QUERIES TO THE DATABASE---
 
 # QUERY #1: List of rooms and the number of students in each of them
-
 req_1 = queries.rooms_students(cursor)
 Writer("data_queries/json_1_result.json").export_json(req_1)
 Writer("data_queries/xml_1_result.xml").export_xml(req_1)
@@ -64,7 +70,6 @@ Writer("data_queries/xml_1_result.xml").export_xml(req_1)
 #     print(f"Rooms {i['roomid']} - Number of students {i['Num_students']}")
 
 # QUERY #2: 5 rooms with the smallest average age of students
-
 req_2 = queries.smallest_rooms_ave_age(cursor)
 
 for row in req_2: 
@@ -78,7 +83,6 @@ Writer("data_queries/xml_2_result.xml").export_xml(req_2)
 #     print(f"Rooms {i['room']} - Average age {i['age']}")
 
 # QUERY #3: 5 rooms with the largest difference in the age of students
-
 req_3 = queries.largest_rooms_age_diff(cursor)
 Writer("data_queries/json_3_result.json").export_json(req_3)
 Writer("data_queries/xml_3_result.xml").export_xml(req_3)
@@ -86,13 +90,17 @@ Writer("data_queries/xml_3_result.xml").export_xml(req_3)
 #     print(f"Room #: {i['room']} - Age difference: {i['age_difference']}")
 
 # QUERY #4: List of rooms where different-sex students live
-
 req_4 = queries.diff_gender(cursor)
 Writer("data_queries/json_4_result.json").export_json(req_4)
 Writer("data_queries/xml_4_result.xml").export_xml(req_4)
 # for i in req_4:
 #     print(f"Room with Male and Femail in it: {i['room']}")
 
+# CLI part for query extraction
+Writer(f"data_queries/result_1.{format}").export_format(req_1, format)
+Writer(f"data_queries/result_2.{format}").export_format(req_1, format)
+Writer(f"data_queries/result_3.{format}").export_format(req_1, format)
+Writer(f"data_queries/result_4.{format}").export_format(req_1, format)
 
 # CLOSING
 cursor.close()

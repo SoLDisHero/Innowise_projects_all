@@ -17,6 +17,12 @@ class Writer:
             for k,v in row.items():
                 child = ET.SubElement(item,k)
                 child.text = str(v)
+        tree = ET.ElementTree(root)
+        tree.write(self.path, encoding="utf-8", xml_declaration=True)
 
-            tree = ET.ElementTree(root)
-            tree.write(self.path, encoding="utf-8", xml_declaration=True)
+    # choosing format
+    def export_format(self, data, format="json"):
+        if format == "json":
+            self.export_json(data)
+        if format == "xml":
+            self.export_xml(data)
