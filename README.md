@@ -13,4 +13,3 @@ Workflow Orchestration: Building and monitoring automated data pipelines (DAGs) 
 Cloud Data Warehousing: Managing enterprise-grade data storage and transformations within Snowflake.
 
 Data Visualization: Transforming raw data into actionable insights using various BI Tools.
- 
