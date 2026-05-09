@@ -98,9 +98,9 @@ Writer("data_queries/xml_4_result.xml").export_xml(req_4)
 
 # CLI part for query extraction
 Writer(f"data_queries/result_1.{format}").export_format(req_1, format)
-Writer(f"data_queries/result_2.{format}").export_format(req_1, format)
-Writer(f"data_queries/result_3.{format}").export_format(req_1, format)
-Writer(f"data_queries/result_4.{format}").export_format(req_1, format)
+Writer(f"data_queries/result_2.{format}").export_format(req_2, format)
+Writer(f"data_queries/result_3.{format}").export_format(req_3, format)
+Writer(f"data_queries/result_4.{format}").export_format(req_4, format)
 
 # CLOSING
 cursor.close()
