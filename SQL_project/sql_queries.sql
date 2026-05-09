@@ -9,13 +9,13 @@ ORDER BY number DESC
 
 -- Output the 10 actors whose movies rented the most, sorted in descending order.
 
-SELECT CONCAT(a.first_name, ' ', a.last_name) AS full_name, COUNT(r.rental_id) AS rental_count
+SELECT a.actor_id, CONCAT(a.first_name, ' ', a.last_name) AS full_name, COUNT(r.rental_id) AS rental_count
 FROM film AS f
 INNER JOIN film_actor AS fa ON f.film_id = fa.film_id
 INNER JOIN actor AS a ON a.actor_id = fa.actor_id
 INNER JOIN inventory AS i ON f.film_id = i.film_id
 INNER JOIN rental AS r ON r.inventory_id = i.inventory_id
-GROUP BY full_name
+GROUP BY a.actor_id, a.first_name, a.last_name
 ORDER BY rental_count DESC
 LIMIT 10;
 
@@ -41,25 +41,25 @@ WHERE i.inventory_id IS NULL;
 -- Output the top 3 actors who have appeared the most in movies in the “Children” category. If several actors have the same number of movies, output all of them.
 
 /* ---DOES NOT WORK COMPLETELY. ONLY SHOW TOP3 BUT NEED TO SHOW ALL THE RESULT IF EQUAL VALUE-------------------
-SELECT CONCAT(a.first_name, ' ', a.last_name) AS actor_name, COUNT(c.name) AS cat_name 
+SELECT a.actor_id, CONCAT(a.first_name, ' ', a.last_name) AS actor_name, COUNT(c.name) AS cat_name 
 FROM actor AS a 
 INNER JOIN film_actor AS fa ON a.actor_id = fa.actor_id 
 INNER JOIN film_category AS fc ON fa.film_id = fc.film_id 
 INNER JOIN category AS c ON fc.category_id = c.category_id 
 WHERE c.name='Children' 
-GROUP BY actor_name
+GROUP BY a.actor_id, a.first_name, a.last_name
 ORDER BY cat_name DESC
 LIMIT 3
 */
 
 WITH actor_counts_all AS (
-    SELECT CONCAT(a.first_name, ' ', a.last_name) AS actor_name, COUNT(c.name) AS movie_count
+    SELECT a.actor_id, CONCAT(a.first_name, ' ', a.last_name) AS actor_name, COUNT(c.name) AS movie_count
     FROM actor AS a
     INNER JOIN film_actor AS fa ON a.actor_id = fa.actor_id
     INNER JOIN film_category AS fc ON fa.film_id = fc.film_id
     INNER JOIN category AS c ON fc.category_id = c.category_id
     WHERE c.name = 'Children'
-    GROUP BY actor_name
+    GROUP BY a.actor_id
 )
 SELECT actor_name, movie_count
 FROM actor_counts_all
