@@ -30,23 +30,24 @@ The project focuses on clean code practices, database interaction, query optimiz
 ## Project Structure
 
 Python-projects/
-│
-├── data/ # Source JSON files
-├── data_queries/ # Exported query results
-├── src/
-│ ├── cli/
-│ │ └── cli.py # Command-line interface
-│ │
-│ ├── db/
-│ │ └── db_con.py # MySQL database connection
-│ │
-│ └── handler/
-│ ├── export.py # Export query results in selected format
-│ ├── loader.py # Load JSON files into the database
-│ └── queries.py # SQL query execution
-│
-├── queries/ # SQL query files
-├── index.sql # SQL indexes
-├── schema.sql # Database schema
-├── main.py # Application entry point
-└── README.md
+
+- │
+- ├── data/ # Source JSON files
+- ├── data_queries/ # Exported query results
+- ├── src/
+- │ ├── cli/
+- │ │ └── cli.py # Command-line interface
+- │ │
+- │ ├── db/
+- │ │ └── db_con.py # MySQL database connection
+- │ │
+- │ └── handler/
+- │ ├── export.py # Export query results in selected format
+- │ ├── loader.py # Load JSON files into the database
+- │ └── queries.py # SQL query execution
+- │
+- ├── queries/ # SQL query files
+- ├── index.sql # SQL indexes
+- ├── schema.sql # Database schema
+- ├── main.py # Application entry point
+- └── README.md
