@@ -61,24 +61,24 @@ This DAG:
 
 ## Pictures
 
-1.  ![wait_for_dataset DAG (extract.py)](/include/pictures/wait_for_dataset.png)
+1.  ![wait_for_dataset DAG (extract.py)](include/pictures/wait_for_dataset.png)
 
-2.  ![load_to_mongo DAG (load.py)](/include/pictures/load_to_mongo.png)
+2.  ![load_to_mongo DAG (load.py)](include/pictures/load_to_mongo.png)
 
 3.
 
-### QUERY 1: Top 5 frequently occurring comments
+QUERY 1: Top 5 frequently occurring comments
 
-![Top 5 frequently occurring comments](/include/pictures/top5.png)
+![Top 5 frequently occurring comments](include/pictures/top5.png)
 
 4.
 
-### QUERY 2: All entries where the “content” field is less than 5 characters long
+QUERY 2: All entries where the “content” field is less than 5 characters long
 
-![All entries where the “content” field is less than 5 characters long](/include/pictures/five_characters.png)
+![All entries where the “content” field is less than 5 characters long](include/pictures/five_characters.png)
 
 5.
 
-### QUERY 3: Average rating for each day (the result should be in timestamp type)
+QUERY 3: Average rating for each day (the result should be in timestamp type)
 
-![Average rating for each day](/include/pictures/average_time.png)
+![Average rating for each day](include/pictures/average_time.png)
