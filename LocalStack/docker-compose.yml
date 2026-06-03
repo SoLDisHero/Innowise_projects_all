@@ -1,0 +1,20 @@
+services:
+  localstack:
+    container_name: localstack-main
+    image: localstack/localstack-pro # required for Pro
+    ports:
+      - "4566:4566"
+    environment:
+      - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN}
+      - DEBUG=${DEBUG:-0}
+      - PERSISTENCE=1
+      - SERVICES=s3,lambda,sns,sqs,dynamodb,logs
+    volumes:
+      - "./volume:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - local-stack_3fa65f_airflow
+
+networks:
+  local-stack_3fa65f_airflow:
+    external: true
