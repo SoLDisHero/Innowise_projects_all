@@ -252,7 +252,7 @@ def file_to_s3():
                     print(e)
         spark.stop()
 
-    creation_bucket_check() >> monthly_data() >> modify_by_spark() >> upload_by_spark() >> to_dynamodb_daily() >> to_dynamodb_monthly()
+    creation_bucket_check() >> monthly_data() >> modify_by_spark() >> upload_by_spark() >> to_dynamodb() >> to_dynamodb_daily() >> to_dynamodb_monthly()
     # creation_bucket_check() >> to_dynamodb() >> to_dynamodb_daily() >> to_dynamodb_monthly()
     
 file_to_s3()
