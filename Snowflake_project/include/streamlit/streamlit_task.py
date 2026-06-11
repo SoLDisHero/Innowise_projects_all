@@ -18,15 +18,18 @@ def refresh_button():
     st.session_state.source_db = db_names[0]
     st.session_state.owner_role = "ACCOUNTADMIN"
     st.session_state.confirmed = False
+# Pulling roles
+roles = session.sql("SHOW ROLES").collect()
+role_names = [r["name"] for r in roles]
 
 # Create variables
 st.title("❄️ Snowflake DB Clone Tool")
 target_db = st.text_input("Target DB name", placeholder="YOUR_DB_NAME_WITH_YOUR_NAME", key="target_db")
-source_db = st.selectbox("Clone from DB",db_names, key="source_db")
-owner_role = st.selectbox("Owner role", ["ACCOUNTADMIN", "PUBLIC", "DEVELOPMENT"], key="owner_role")
+source_db = st.selectbox("Clone from DB", db_names, key="source_db")
+owner_role = st.selectbox("Owner role", role_names, key="owner_role")
 
 # Need to specify read only status for below roles, otherwise empty
-if owner_role in ["PUBLIC", "DEVELOPMENT"]:
+if owner_role in role_names[1:]:
     read_only_role = "read_only_role"
 else:
     read_only_role = ""
@@ -40,6 +43,9 @@ st.write("Please, always check db names you set up!")
 
 new_database = session.sql("SHOW DATABASES").to_pandas()
 st.dataframe(new_database)
+# if target_db:
+#     st.write("Privileges")
+#     st.write(session.sql(f"SHOW GRANTS ON DATABASE {target_db};"))
 
 # Create the Execute SQL button to DB Clone
 if st.button("🚀 Execute SQL"):
@@ -62,12 +68,20 @@ if st.button("🚀 Execute SQL"):
         if read_only_role:
             session.sql(f"GRANT USAGE ON DATABASE {target_db} TO ROLE {owner_role};").collect()
             session.sql(f"GRANT USAGE ON ALL SCHEMAS IN DATABASE {target_db} TO ROLE {owner_role};").collect()
-            session.sql(f"GRANT USAGE ON ALL TABLES IN DATABASE {target_db} TO ROLE {owner_role};").collect()
             session.sql(f"GRANT SELECT ON ALL TABLES IN DATABASE {target_db} TO ROLE {owner_role};").collect()
         else:
             session.sql(f"GRANT OWNERSHIP ON DATABASE {target_db} TO ROLE {owner_role} COPY CURRENT GRANTS;").collect()
-        st.success(f"Database {target_db} created successfully.")
-
+        st.success(f"Database {target_db} created successfully.")     
         st.session_state.confirmed = False
 
+if target_db:
+    try:
+        grants_df = session.sql(
+            f"SHOW GRANTS ON DATABASE {target_db}"
+        ).to_pandas()
 
+        st.subheader("Database Privileges")
+        st.dataframe(grants_df)
+
+    except Exception:
+        pass
