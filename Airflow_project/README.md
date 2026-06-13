@@ -82,3 +82,14 @@ QUERY 2: All entries where the “content” field is less than 5 characters lon
 QUERY 3: Average rating for each day (the result should be in timestamp type)
 
 ![Average rating for each day](include/pictures/average_time.png)
+
+## Security Notes
+
+Originally credentials were embedded in configuration files for local
+development. The project was updated to use environment variables and
+excluded secret files from version control.
+
+Sensitive values such as database credentials and connection strings
+should never be committed to Git.
+Create a local `.env` file based on `.env.example` and provide your own
+credentials.
