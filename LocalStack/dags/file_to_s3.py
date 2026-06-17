@@ -112,8 +112,8 @@ def file_to_s3():
             'dynamodb',
             endpoint_url="http://localstack-main:4566",
             region_name="eu-north-1",
-            aws_access_key_id="sold",
-            aws_secret_access_key="sold"
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
             )
             table_original = dynamodb.Table("original_rides")
 
@@ -176,8 +176,8 @@ def file_to_s3():
             'dynamodb',
             endpoint_url="http://localstack-main:4566",
             region_name="eu-north-1",
-            aws_access_key_id="sold",
-            aws_secret_access_key="sold"
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
         )
         table_daily = dynamodb.Table("daily_rides")
 
@@ -226,8 +226,8 @@ def file_to_s3():
             'dynamodb',
             endpoint_url="http://localstack-main:4566",
             region_name="eu-north-1",
-            aws_access_key_id="sold",
-            aws_secret_access_key="sold"
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
         )
         table_monthly = dynamodb.Table("monthly_rides")
         def safe_decimal(value):
