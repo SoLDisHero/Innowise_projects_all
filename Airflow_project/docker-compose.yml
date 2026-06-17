@@ -10,6 +10,13 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - airflow-network
 
 volumes:
   mongodb_data:
+
+networks:
+  airflow-network:
+    external: true
+    name: airflow-project_cd454f_airflow
